@@ -119,7 +119,7 @@ const questions = [
     //9. Email
     {
         type: 'input',
-        name: 'email',
+        name: 'questions',
         message: 'What is a good email for people to contact you?',
         validate: emailInput => {
             if (emailInput) {
@@ -130,6 +130,10 @@ const questions = [
         }
     },
 ];
+
+//ToC ?? not too sure about this one
+
+
 
 // TODO: Create a function to write README file
 function writeToFile(fileName, data) {
@@ -145,8 +149,15 @@ function writeToFile(fileName, data) {
 
 // TODO: Create a function to initialize app
 function init() {
-
-}
+    inquirer.prompt(questions)
+    .then(answers => {
+        console.log('Readme updating!' + answers);
+        fs.writeFileSync("ReadMe.md", answers);
+    })
+    .catch((err) => {
+        console.log(err);
+    })
+};
 
 // Function call to initialize app
 init();
