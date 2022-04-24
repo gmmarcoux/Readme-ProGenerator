@@ -2,8 +2,7 @@
 const inquirer = require("inquirer");
 const fs = require('fs');
 
-const generateMarkdown = require('./src/generateMarkdown.js');
-const util = require('util'); 
+const { writeFile, copyFile } = require('./develop/utils/generateMarkdown.js');
 
 // TODO: Create an array of questions for user input
 const questions = [
@@ -150,9 +149,12 @@ function writeToFile(fileName, data) {
 // TODO: Create a function to initialize app
 function init() {
     inquirer.prompt(questions)
-    .then(answers => {
-        console.log('Readme updating!' + answers);
-        fs.writeFileSync("ReadMe.md", answers);
+    .then(writeFileResponse => {
+        console.log('Readme updating!' + writeFileResponse);
+        return copyFile();
+    })
+    .then(copyFileResponse => {
+        console.log(copyFileResponse);
     })
     .catch((err) => {
         console.log(err);
